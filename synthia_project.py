@@ -286,7 +286,7 @@ def translate_text(text, source_language, target_language):
 def main():
     global cow_id, yield_amount
     st.title("Yield Recorder")
-    st.write("Tell me what is the yield of your cow! BALLE")
+    st.write("Tell me what is the yield of your cow!")
     
     if 'chat_history' not in st.session_state:
         st.session_state.chat_history = []
@@ -342,7 +342,8 @@ def main():
                         cow_id, yield_amount = extract_info(command)
                         st.write("line 343 tak chal raha hain")
                         if cow_id and yield_amount:
-                            print(f"Tag number: {cow_id}, Yield Amount: {yield_amount} litres")
+                            
+                            st.write(f"Tag number: {cow_id}, Yield Amount: {yield_amount} litres")
                             final_json = final_data(cow_id, yield_amount)
                             json_body = json.loads(final_json)
                             json_dict = json_body[0]
