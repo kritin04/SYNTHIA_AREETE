@@ -360,9 +360,6 @@ def main():
                             json_dict = json_body[0]
                             key = f"Extracted_text/{json_dict['farm_name']}/{json_dict['deviceid']}/extracted.json"
                             s3.put_object(Body=final_json, Bucket=bucket_name, Key=key)
-                        else:
-                            logging.error("Failed to extract cow_id or yield_amount")
-                            st.error("Failed to extract cow_id or yield_amount")
                             # Request confirmation
                             hindi_string = f"आपके खेत का नाम {json_dict['farm_name']} गाय आईडी {json_dict['tag_number']} ने {json_dict['yield']} किलो {json_dict['date']} दूध दिया| क्या ये सही है?"
                             audio_base64 = text_to_speech(hindi_string, voice_id="Aditi")
@@ -401,9 +398,9 @@ def main():
                                 else:
                                     st.error("Failed to upload confirmation audio to S3.")
                         else:
-                            print("No cow ID or yield amount found in the input.")
+                             st.error("No cow ID or yield amount found in the input.")
                     else:
-                        print("Failed to read file")
+                         print("Failed to read file")
                 except Exception as e:
                     logging.error(f"Error during taking the input: {e}")
                     st.error(f"Error during input: {e}")
