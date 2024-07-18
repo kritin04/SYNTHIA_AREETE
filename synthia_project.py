@@ -340,7 +340,9 @@ def main():
                     command = takeCommand()
                     if command:
                         cow_id, yield_amount = extract_info(command)
+                        
                         if cow_id and yield_amount:
+                            st.write("line 345 tak chal raha")
                             print(f"Tag number: {cow_id}, Yield Amount: {yield_amount} litres")
                             final_json = final_data(cow_id, yield_amount)
                             json_body = json.loads(final_json)
