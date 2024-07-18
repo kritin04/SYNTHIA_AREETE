@@ -19,7 +19,7 @@ import requests
 
 bucket_name = "transcribetestkritin"
 
-github_url = "https://raw.github.com/kritin04/SYNTHIA_AREETE/main/CowIDs_Sheet1_.xlsx"
+github_url = "https://raw.github.com/kritin04/Synthia_yield_recorder/main/CowIDs_Sheet1_.xlsx"
 
 def download_excel_from_github(url, local_path):
     try:
@@ -58,17 +58,11 @@ st.markdown(
 
 
 def takeCommand():
-    try:
-        data=s3.get_object(Bucket="transcribetestkritin", Key=f"speech_to_text/text.json")
-        body=data['Body'].read().decode('utf-8')
-        data=json.loads(body)
-        print(data)
-        logging.debug(f"Data from S3: {data}")
-        return data
-    except Exception as e:
-        logging.error(f"Error reading from S3: {e}")
-        st.error("error reading from s3")
-        return {}
+    data=s3.get_object(Bucket="transcribetestkritin", Key=f"speech_to_text/text.json")
+    body=data['Body'].read().decode('utf-8')
+    data=json.loads(body)
+    print(data)
+    return data
 
 def update_yield_in_excel(cow_id, new_yield):
     # Read the Excel file
@@ -118,13 +112,11 @@ def convert_numerical_words(text):
 def extract_info(text):
 
     if not text:
-        st.error("no text provided")
         return None, None
     try:
         df = pd.read_excel(ttp, sheet_name='Sheet1')
-        logging.debug(f"Excel data: {df.head()}")
     except Exception as e:
-        st.error("Error reading Excel file")
+        print(f"Error reading Excel file: {e}")
         return None, None
         
         # Print column names to verify
@@ -346,20 +338,16 @@ def main():
                     except Exception as e:
                         print(str(e))
                     command = takeCommand()
-                    logging.debug(f"Command received: {command}")
                     if command:
                         cow_id, yield_amount = extract_info(command)
-                        logging.debug(f"Extracted cow_id: {cow_id}, yield_amount: {yield_amount}")
-                        st.wrte("Extracted cow_id: {cow_id}, yield_amount: {yield_amount}")
-                        st.write("line 343 tak chal raha")
                         if cow_id and yield_amount:
-                            st.write("line 345 tak chal raha")
                             print(f"Tag number: {cow_id}, Yield Amount: {yield_amount} litres")
                             final_json = final_data(cow_id, yield_amount)
                             json_body = json.loads(final_json)
                             json_dict = json_body[0]
                             key = f"Extracted_text/{json_dict['farm_name']}/{json_dict['deviceid']}/extracted.json"
                             s3.put_object(Body=final_json, Bucket=bucket_name, Key=key)
+                            
                             # Request confirmation
                             hindi_string = f"आपके खेत का नाम {json_dict['farm_name']} गाय आईडी {json_dict['tag_number']} ने {json_dict['yield']} किलो {json_dict['date']} दूध दिया| क्या ये सही है?"
                             audio_base64 = text_to_speech(hindi_string, voice_id="Aditi")
@@ -398,9 +386,9 @@ def main():
                                 else:
                                     st.error("Failed to upload confirmation audio to S3.")
                         else:
-                             st.error("No cow ID or yield amount found in the input.")
+                            print("No cow ID or yield amount found in the input.")
                     else:
-                         print("Failed to read file")
+                        print("Failed to read file")
                 except Exception as e:
                     logging.error(f"Error during taking the input: {e}")
                     st.error(f"Error during input: {e}")
