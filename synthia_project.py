@@ -340,6 +340,7 @@ def main():
                     command = takeCommand()
                     if command:
                         cow_id, yield_amount = extract_info(command)
+                        st.write("line 343 tak chal raha hain")
                         if cow_id and yield_amount:
                             print(f"Tag number: {cow_id}, Yield Amount: {yield_amount} litres")
                             final_json = final_data(cow_id, yield_amount)
@@ -347,11 +348,14 @@ def main():
                             json_dict = json_body[0]
                             key = f"Extracted_text/{json_dict['farm_name']}/{json_dict['deviceid']}/extracted.json"
                             s3.put_object(Body=final_json, Bucket=bucket_name, Key=key)
+                            st.write("line 351 tak chal raha hain")
                             
                             # Request confirmation
                             hindi_string = f"आपके खेत का नाम {json_dict['farm_name']} गाय आईडी {json_dict['tag_number']} ने {json_dict['yield']} किलो {json_dict['date']} दूध दिया| क्या ये सही है?"
+                            st.write("line 355 tak chal raha hain")
                             audio_base64 = text_to_speech(hindi_string, voice_id="Aditi")
                             if audio_base64:
+                                st.write("line 358 tak chal raha")
                                 audio_bytes = base64.b64decode(audio_base64)
                                 st.audio(audio_bytes, format='audio/mp3')
                                 st.write(hindi_string)
