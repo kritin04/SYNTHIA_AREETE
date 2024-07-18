@@ -19,7 +19,7 @@ import requests
 
 bucket_name = "transcribetestkritin"
 
-github_url = "https://raw.github.com/kritin04/Synthia_yield_recorder/main/CowIDs_Sheet1_.xlsx"
+github_url = "https://raw.github.com/kritin04/SYNTHIA_AREETE/main/CowIDs_Sheet1_.xlsx"
 
 def download_excel_from_github(url, local_path):
     try:
