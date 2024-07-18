@@ -340,7 +340,7 @@ def main():
                     command = takeCommand()
                     if command:
                         cow_id, yield_amount = extract_info(command)
-                        
+                        st.write("line 343 tak chal raha")
                         if cow_id and yield_amount:
                             st.write("line 345 tak chal raha")
                             print(f"Tag number: {cow_id}, Yield Amount: {yield_amount} litres")
