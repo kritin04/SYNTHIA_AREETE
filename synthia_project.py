@@ -286,7 +286,7 @@ def translate_text(text, source_language, target_language):
 def main():
     global cow_id, yield_amount
     st.title("Yield Recorder")
-    st.write("Tell me what is the yield of your cow!")
+    st.write("Tell me what is the yield of your cow! BALLE")
     
     if 'chat_history' not in st.session_state:
         st.session_state.chat_history = []
