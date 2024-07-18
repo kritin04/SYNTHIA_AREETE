@@ -340,7 +340,6 @@ def main():
                     command = takeCommand()
                     if command:
                         cow_id, yield_amount = extract_info(command)
-                        st.write
                         if cow_id and yield_amount:
                             print(f"Tag number: {cow_id}, Yield Amount: {yield_amount} litres")
                             final_json = final_data(cow_id, yield_amount)
