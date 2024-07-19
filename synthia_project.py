@@ -15,24 +15,9 @@ from word2number import w2n
 import re
 from datetime import datetime
 import time
-import requests
-
 bucket_name = "transcribetestkritin"
 
-github_url = "https://raw.github.com/kritin04/Synthia_yield_recorder/main/CowIDs_Sheet1_.xlsx"
-
-def download_excel_from_github(url, local_path):
-    try:
-        response = requests.get(url)
-        response.raise_for_status()  # Ensure we notice bad responses
-        with open(local_path, 'wb') as file:
-            file.write(response.content)
-        st.success(f"Excel file downloaded successfully from {url}")
-    except Exception as e:
-        st.error(f"Error downloading Excel file: {e}")
-
-ttp = r'CowIDs_Sheet1_.xlsx'
-download_excel_from_github(github_url, ttp)
+ttp = r'C:\Users\Kritin\Desktop\chatbot\test\env\CowIDs_Sheet1_.xlsx'
 os.environ['AWS_ACCESS_KEY_ID'] = 'AKIA5FTY7VMV5OJBO7NW'
 os.environ['AWS_SECRET_ACCESS_KEY'] = '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'
 
